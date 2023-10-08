@@ -1,2 +1,8 @@
-package com.picpaysimplificado.picpaysimplificado.user;public class User {
+package com.picpaysimplificado.picpaysimplificado.user;
+
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class User {
 }
