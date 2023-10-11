@@ -2,6 +2,7 @@ package med.voll.api.controller;
 
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import med.voll.api.medico.DadosCadastroMedico;
 import med.voll.api.medico.Medico;
 import med.voll.api.medico.MedicosRepository;
@@ -24,7 +25,7 @@ public class medicoController {
     /***@RequestBody > indica que o parâmetro <String json> irá puxar o que tiver
      * no corpo da requisição - que neste caso é um json***/
     @Transactional
-    public void cadastrar(@RequestBody DadosCadastroMedico dados){
+    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
         repository.save(new Medico(dados));
 
     }
