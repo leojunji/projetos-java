@@ -14,6 +14,9 @@ public record DadosPessoa(
         @Email
         String email,
 
+        @NotBlank
+        String telefone,
+
         @NotNull
         @Valid //considerar as validações do DadosEndereco
         DadosEndereco endereco) {

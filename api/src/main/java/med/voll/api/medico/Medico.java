@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.pessoa.Endereco;
 import med.voll.api.pessoa.Pessoa;
 
 
@@ -38,8 +37,10 @@ public class Medico {
 
         this.crm = dados.crm();
 
+
         this.especialidade = dados.especialidade();
 
 
     }
+
 }
