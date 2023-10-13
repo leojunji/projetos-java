@@ -20,4 +20,7 @@ public record DadosPessoa(
         @NotNull
         @Valid //considerar as validações do DadosEndereco
         DadosEndereco endereco) {
+        public DadosPessoa(Pessoa medico) {
+                this(medico.getNome(), medico.getEmail(), medico.getTelefone(), new DadosEndereco(medico.getEndereco()));
+        }
 }

@@ -26,4 +26,8 @@ public record DadosEndereco(
         @Pattern(regexp = "\\d{8}")
         String cep) {
 
+    public DadosEndereco(Endereco enderecoMedico) {
+        this(enderecoMedico.getLogradouro(), enderecoMedico.getNumero(), enderecoMedico.getComplemento(),
+                enderecoMedico.getBairro(), enderecoMedico.getCidade(), enderecoMedico.getUf(), enderecoMedico.getCep());
+    }
 }

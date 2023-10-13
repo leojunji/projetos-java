@@ -23,4 +23,8 @@ public record DadosCadastroMedico(
         String crm,
         @NotNull //not null apenas para Campos não string
         Especialidade especialidade) {
+
+        public DadosCadastroMedico(Medico medico){
+                this(new DadosPessoa(medico.getMedico()), medico.getCrm(), medico.getEspecialidade());
+        }
 }

@@ -43,4 +43,7 @@ public class Medico {
 
     }
 
+    public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
+        this.medico.atualizarInformacoes(dados);
+    }
 }
