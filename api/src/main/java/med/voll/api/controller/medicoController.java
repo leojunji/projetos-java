@@ -10,9 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping(value = "/medicos")
 public class medicoController {
@@ -24,7 +21,7 @@ public class medicoController {
     @PostMapping //qual o verbo do protocolo HTTP esse método irá realizar, neste caso vai realizar o Create do CRUD
     /***@RequestBody > indica que o parâmetro <String json> irá puxar o que tiver
      * no corpo da requisição - que neste caso é um json***/
-    @Transactional //quando o método salva, atualiza e/ou exclui dados de um banco de dados
+    @Transactional //Colocado quando o método salva, atualiza e/ou exclui dados de um banco de dados
     /***Este método irá adicionar um novo registro***/
     public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
         repository.save(new Medico(dados));
@@ -46,7 +43,7 @@ public class medicoController {
      * @PageableDefault vai ter uma padrão de retorno caso o usário não mude
      * ***/
     public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"medico.nome","especialidade"}) Pageable paginacao){
-        return repository.findAll(paginacao).map(DadosListagemMedico::new);
+        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
 
 
     }
@@ -62,10 +59,11 @@ public class medicoController {
     }
 
     @DeleteMapping("/{id}") //as chaves {} indica que é um parâmetro dinâmico, ou seja, não é um valor específico
-    //@PathVariable indica que é um parâmetro do caminho da URL
+    //@PathVariable indica que o id irá receber um parâmetro da URL
     @Transactional
-    public void deletar(@PathVariable Long id) {
-            repository.deleteById(id);
+    public void excluir(@PathVariable Long id) {
+        Medico medico = repository.getReferenceById(id);
+        medico.excluir();
 
     }
 }

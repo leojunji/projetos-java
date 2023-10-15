@@ -31,19 +31,21 @@ public class Medico {
     @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
 
+    private Boolean ativo;
+
 
     public Medico(DadosCadastroMedico dados) {
+        this.ativo = true; //no BD vai ser 1
         this.medico = new Pessoa(dados.medico());
-
         this.crm = dados.crm();
-
-
         this.especialidade = dados.especialidade();
-
-
     }
 
     public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
         this.medico.atualizarInformacoes(dados);
+    }
+
+    public void excluir() {
+        this.ativo = false; //no BD vai ser 0
     }
 }
