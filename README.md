@@ -16,15 +16,33 @@ Contato:
 
 
 ## API <a name="modulo1"></a> 
-![Badge em Desenvolvimento](https://img.shields.io/badge/status-em%20desenvolvimento-blue) 
-<p>API<p>
+![Badge em Desenvolvimento](https://img.shields.io/badge/status-finalizado-green)
+<p>
+Projeto "Spring Boot 3: desenvolva uma API Rest em Java" do curso da Alura. 
+<p>
+<p>
+A proposta do projeto foi realizar o back-end de uma aplicação médica, com as seguintes funcionalidades:
+<p>
+  
+* Realizar o cadastro do médico
+* Realizar a listagem de médicos
+* Realizar a exclusão de médicos
 
 ## picpaysimplificado <a name="modulo2"></a> 
 ![Badge em Desenvolvimento](https://img.shields.io/badge/status-em%20desenvolvimento-blue) 
 
-<p>pcipay<p>
+<p>Observação: Projeto apenas para fins de estudo<p>
+
+<p>Projeto para vaga de programador no PICPAY<p>
 
 ## userdept <a name="modulo3"></a> 
 ![Badge em Desenvolvimento](https://img.shields.io/badge/status-finalizado-green)
 
-<p>userdept text<p>
+<p>Projeto "Seu primeiro projeto Java web no Spring Boot" do curso do Professor Nelio Alves <p>
+<p>
+A proposta do projeto foi construir um pequeno sistema (API REST) de usuários e departamentos, com as seguintes funcionalidades:
+<p>
+
+* Buscar todos usuários
+* Buscar um usuário pelo seu id
+* Inserir um novo usuário
