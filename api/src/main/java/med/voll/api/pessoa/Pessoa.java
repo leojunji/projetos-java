@@ -34,10 +34,13 @@ public class Pessoa {
 
 
     public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
-        if (dados.nome() != null) {
+        if (dados.email() != null && !dados.email().equalsIgnoreCase("")) {
+            this.email = dados.email();
+        }
+        if (dados.nome() != null && !dados.nome().equalsIgnoreCase("")) {
             this.nome = dados.nome();
         }
-        if (dados.telefone() != null) {
+        if (dados.telefone() != null && !dados.telefone().equalsIgnoreCase("")) {
             this.telefone = dados.telefone();
         }
         if (dados.endereco() != null) {

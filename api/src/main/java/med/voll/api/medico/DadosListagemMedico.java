@@ -1,9 +1,7 @@
 package med.voll.api.medico;
 
-import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.SortComparator;
 
+import med.voll.api.medico.especialidade.Especialidade;
 
 public record DadosListagemMedico(Long id, String nome, String email, String crm, Especialidade especialidade) {
 

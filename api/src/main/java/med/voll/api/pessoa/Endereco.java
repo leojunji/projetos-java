@@ -44,27 +44,27 @@ public class Endereco {
             this.numero = dados.numero();
         }
 
-        if (dados.complemento() != null) {
+        if (dados.complemento() != null && !dados.complemento().equalsIgnoreCase("")) {
             this.complemento = dados.complemento();
         }
 
-        if (dados.bairro() != null) {
+        if (dados.bairro() != null && !dados.bairro().equalsIgnoreCase("")) {
             this.bairro = dados.bairro();
         }
 
-        if (dados.cidade() != null) {
+        if (dados.cidade() != null && !dados.cidade().equalsIgnoreCase("")) {
             this.cidade = dados.cidade();
         }
 
-        if (dados.uf() != null) {
+        if (dados.uf() != null && !dados.uf().equalsIgnoreCase("")) {
             this.uf = dados.uf();
         }
 
-        if (dados.cep() != null) {
+        if (dados.cep() != null && !dados.cep().equalsIgnoreCase("")) {
             this.cep = dados.cep();
         }
 
-        if (dados.logradouro() != null) {
+        if (dados.logradouro() != null && !dados.logradouro().equalsIgnoreCase("")) {
             this.logradouro = dados.logradouro();
         }
 

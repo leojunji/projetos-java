@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.medico.especialidade.Especialidade;
 import med.voll.api.pessoa.Pessoa;
 
 
@@ -28,17 +29,22 @@ public class Medico {
 
     private String crm;
 
-    @Enumerated(EnumType.STRING)
-    private Especialidade especialidade;
+    //@ManyToOne
+    //private Especialidade especialidade;
 
     private Boolean ativo;
+    //
+    @ManyToOne
+    @JoinColumn(name = "especialidade_id")
+    private Especialidade especialidade;
+
 
 
     public Medico(DadosCadastroMedico dados) {
         this.ativo = true; //no BD vai ser 1
         this.medico = new Pessoa(dados.medico());
         this.crm = dados.crm();
-        this.especialidade = dados.especialidade();
+        this.especialidade = new Especialidade(dados.especialidade());
     }
 
     public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
