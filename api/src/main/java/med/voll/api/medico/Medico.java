@@ -1,10 +1,7 @@
 package med.voll.api.medico;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import med.voll.api.medico.especialidade.Especialidade;
 import med.voll.api.pessoa.Pessoa;
 
@@ -19,6 +16,7 @@ import med.voll.api.pessoa.Pessoa;
 @NoArgsConstructor //construtor que NÃO recebe todos os campos
 @AllArgsConstructor //construtor que recebe todos os campos
 @EqualsAndHashCode(of = "id")
+@ToString
 public class Medico {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
