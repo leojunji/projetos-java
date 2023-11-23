@@ -1,7 +1,7 @@
 ###############################################################################################################
 
 
-Colocar a seguinte URL para cadstrar:
+Colocar a seguinte URL para cadastrar:
 
 http://localhost:8080/medicos
 
