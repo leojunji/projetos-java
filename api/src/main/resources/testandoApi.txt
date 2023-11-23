@@ -1,0 +1,77 @@
+###############################################################################################################
+
+
+Colocar a seguinte URL para cadstrar:
+
+http://localhost:8080/medicos
+
+
+1 -- JSON de exemplo para cadastro:
+
+
+{
+	"nome": "João Exemplo da Silva",
+	"email": "email@example.com",
+	"telefone": "411234567890",
+	"endereco": {
+		"logradouro": "Rua da Praia",
+		"numero": 789,
+		"bairro": "Beira Mar",
+		"cidade": "Salvador",
+		"uf": "BA",
+		"cep": "56789012"
+	},
+	"crm": "123456",
+	"especialidade": {
+		"id": 2
+	}
+}
+
+###############################################################################################################
+
+2 -- ver usuario cadastro
+
+
+http://localhost:8080/medicos/id=11
+
+
+###############################################################################################################
+
+3 -- ver usuario cadastrado por nome:
+
+http://localhost:8080/medicos/nome=João Exemplo da Silva?sort=especialidade.nome
+
+
+###############################################################################################################
+
+
+Colocar a seguinte URL para atualizar:
+
+http://localhost:8080/medicos
+
+4 -- JSON para atualizar dados:
+
+{
+	"id": 11,
+	"nome": "João Exemplo atualizado da Silva",
+	"endereco": {
+		"logradouro": "Atualizado Rua da Praia"
+	},
+	"especialidade": {
+		"id": 5
+	}
+}
+
+###############################################################################################################
+
+5 -- ver dados atualizados:
+
+http://localhost:8080/medicos/id=11
+
+###############################################################################################################
+
+6 -- deletar usuario:
+
+
+http://localhost:8080/medicos/id=11
+

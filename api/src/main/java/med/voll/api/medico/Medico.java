@@ -1,11 +1,9 @@
 package med.voll.api.medico;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import med.voll.api.medico.especialidade.Especialidade;
+import med.voll.api.pessoa.DadosPessoa;
 import med.voll.api.pessoa.Pessoa;
 
 
@@ -16,16 +14,16 @@ import med.voll.api.pessoa.Pessoa;
 @Entity(name = "Medico") // indica que vai ser uma tabela no banco de dados
 @Table(name = "medicos") //nome da tabela no banco de dados que está classe vai relacionar/mapear
 @Getter
-@NoArgsConstructor //construtor que NÃO recebe todos os campos
-@AllArgsConstructor //construtor que recebe todos os campos
-@EqualsAndHashCode(of = "id")
-public class Medico {
+@ToString (callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class Medico extends Pessoa {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded //indica que os campos da <classe Pessoa> vao estar na tabela <medicos>
-    private Pessoa medico;
+//    @Embedded //indica que os campos da <classe Pessoa> vao estar na tabela <medicos>
+//    private Pessoa pessoa;
 
     private String crm;
 
@@ -38,17 +36,19 @@ public class Medico {
     @JoinColumn(name = "especialidade_id")
     private Especialidade especialidade;
 
-
-
     public Medico(DadosCadastroMedico dados) {
+        super(dados);
         this.ativo = true; //no BD vai ser 1
-        this.medico = new Pessoa(dados.medico());
         this.crm = dados.crm();
         this.especialidade = new Especialidade(dados.especialidade());
     }
 
+
+
+
+    @Override
     public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
-        this.medico.atualizarInformacoes(dados);
+        super.atualizarInformacoes(dados);
     }
 
     public void excluir() {

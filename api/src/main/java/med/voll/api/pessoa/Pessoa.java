@@ -2,16 +2,20 @@ package med.voll.api.pessoa;
 
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import med.voll.api.medico.DadosAtualizacaoMedico;
+import med.voll.api.medico.DadosCadastroMedico;
 
 
-@Embeddable
+@MappedSuperclass //Entidades filhas irão receber os atributos desta classe
 @Getter
-@NoArgsConstructor //construtor que NÃO recebe todos os campos
-@AllArgsConstructor //construtor que recebe todos os campos
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pessoa {
 
     private String nome;
@@ -22,14 +26,14 @@ public class Pessoa {
 
     private Endereco endereco;
 
-    public Pessoa(DadosPessoa medico) {
-        this.nome = medico.nome();
+    public Pessoa(DadosCadastroMedico dados) {
+        this.nome = dados.nome();
 
-        this.email = medico.email();
+        this.email = dados.email();
 
-        this.telefone = medico.telefone();
+        this.telefone = dados.telefone();
 
-        this.endereco = new Endereco(medico.endereco());
+        this.endereco = new Endereco(dados.endereco());
     }
 
 
