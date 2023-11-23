@@ -30,6 +30,7 @@ public class Medico extends Pessoa {
     //@ManyToOne
     //private Especialidade especialidade;
 
+    //atributo da classe
     private Boolean ativo;
     //
     @ManyToOne
