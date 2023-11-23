@@ -28,10 +28,9 @@ public class MedicoController {
     @Transactional //Colocado quando o método salva, atualiza e/ou exclui dados de um banco de dados
     /***Este método irá adicionar um novo registro
      * ver arquivo  src/main/resources/testandoApi.txt***/
-    public String cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
-        Medico medico = new Medico(dados);
-        repository.save(medico);
-        return "DADOS CADASTRADOS COM SUCESSO\n" + medico.toString();
+    public DadosListagemCompletaMedico cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
+        Medico medico = repository.save(new Medico(dados));
+        return new DadosListagemCompletaMedico(repository.findById(medico.getId()).get());
 
     }
 
