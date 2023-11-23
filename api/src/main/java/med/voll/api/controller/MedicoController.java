@@ -26,11 +26,17 @@ public class MedicoController {
     /***@RequestBody > indica que o parâmetro <String json> irá puxar o que tiver
      * no corpo da requisição - que neste caso é um json***/
     @Transactional //Colocado quando o método salva, atualiza e/ou exclui dados de um banco de dados
-    /***Este método irá adicionar um novo registro***/
-    public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
-        repository.save(new Medico(dados));
+    /***Este método irá adicionar um novo registro
+     * ver arquivo  src/main/resources/testandoApi.txt***/
+    public String cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
+        Medico medico = new Medico(dados);
+        repository.save(medico);
+        return "DADOS CADASTRADOS COM SUCESSO\n" + medico.toString();
 
     }
+
+
+
 
 
 
@@ -82,7 +88,8 @@ public class MedicoController {
     @Transactional
     public DadosListagemCompletaMedico atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
         /***
-         * O getReferenceById() vai retornar os dados(do tipo Medico) apenas do ID solicitado***/
+         * O getReferenceById() vai retornar os dados(do tipo Medico) apenas do ID solicitado
+         * ver arquivo src/main/resources/testandoApi.txt***/
         Medico medico = repository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
         return dadosMedicoById(dados.id());
@@ -95,9 +102,9 @@ public class MedicoController {
     /***Este método vai deletar um registro de forma lógica, colocando ativo = 0 ou false
      * @PathVariable indica que o id irá receber um parâmetro da URL
      * ex: http://localhost:8080/medicos/id=2 ***/
-    public void excluir(@PathVariable Long id) {
+    public String excluir(@PathVariable Long id) {
         Medico medico = repository.getReferenceById(id);
         medico.excluir();
-
+        return "O usuário " + medico.getNome() + " foi excluído com SUCESSO";
     }
 }
