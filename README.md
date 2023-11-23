@@ -26,6 +26,7 @@ A proposta do projeto foi realizar o back-end de uma aplicação médica, com as
   
 * Realizar o cadastro do médico
 * Realizar a listagem de médicos
+    * Busca por Id e por Nome
 * Realizar a exclusão de médicos
 
 ## picpaysimplificado <a name="modulo2"></a> 
