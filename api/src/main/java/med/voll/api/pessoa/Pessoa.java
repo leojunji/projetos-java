@@ -2,13 +2,14 @@ package med.voll.api.pessoa;
 
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.medico.DadosAtualizacaoMedico;
 
 
-@Embeddable
+@MappedSuperclass //Entidades filhas irão receber os atributos desta classe
 @Getter
 @NoArgsConstructor //construtor que NÃO recebe todos os campos
 @AllArgsConstructor //construtor que recebe todos os campos

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class MedicoController {
 
     @Autowired //irá instanciar este atributo de forma automatica
-    private MedicosRepository repository;
+    private MedicosRepository repository; //repository da tabela medico
 
 
     @PostMapping //qual o verbo do protocolo HTTP esse método irá realizar, neste caso vai realizar o Create do CRUD
@@ -35,22 +35,26 @@ public class MedicoController {
 
 
 
-//    /***
-//     * vai retornar as informações completas de um médico de acordo como id informado*/
-//    @GetMapping(value = "/{id}")
-//    public DadosListagemCompletaMedico dadosMedicoById(@PathVariable Long id){
-//        return new DadosListagemCompletaMedico(repository.findById(id).get());
-//
-//
-//    }
+    /***
+     * vai retornar as informações completas de um médico de acordo como id informado
+     * ex: http://localhost:8080/medicos/id=3
+     * */
+    @GetMapping(value = "/id={id}")
+    public DadosListagemCompletaMedico dadosMedicoById(@PathVariable Long id){
+        return new DadosListagemCompletaMedico(repository.findById(id).get());
 
-    @GetMapping(value = "/{nome}")
-    public Page<DadosListagemCompletaMedico> dadosMedicoByNome(@PathVariable String nome,@PageableDefault(size = 10) Pageable paginacao) {
-        return repository.findByNome(nome, paginacao).map(DadosListagemCompletaMedico::new);
 
     }
 
-    //repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
+
+    /*** Vai retornar os registros(ativos) dos medicos que tiverem o nome solicitado na url
+     * ex: http://localhost:8080/medicos/nome=Gabriela?sort=especialidade.nome
+    * */
+    @GetMapping(value = "/nome={nome}")
+    public Page<DadosListagemMedico> dadosMedicoByNome(@PathVariable String nome,@PageableDefault(size = 10) Pageable paginacao) {
+        return repository.findByNome(nome, paginacao).map(DadosListagemMedico::new);
+
+    }
 
 
 
@@ -59,35 +63,38 @@ public class MedicoController {
 
     @GetMapping//vai realizar o Read do CRUD
     /***
-     * O parâmetro paginacao pode receber vai receber argumentos da URL e retornar os dados de acordo com os argumentos
+     * O parâmetro paginacao pode receber argumentos da URL e retornar os dados de acordo com os argumentos
      * ex: medicos?size=1 retorna apenas 1 registro do banco de dados
-     * ex: medicos?sort=medico.nome vai ordenar os registros pelo nome
+     * ex: medicos?sort=nome vai ordenar os registros pelo nome do medico
+     * ex: medicos?sort=especialidade.nome vai ordenar os registros pelo nome da especialidade
      * ex: http://localhost:8080/medicos?sort=especialidade.nome
      * @PageableDefault vai ter uma padrão de retorno caso o usuário não mude
      * Este método retorna um Page, pois o tipo page retorna além dos dados, informações como quantidade de dados, etc...
+     * Retorna apenas os registros ativos = 1 ou true
      * ***/
-    public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"medico.nome","especialidade.nome"}) Pageable paginacao){
+    public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome","especialidade.nome"}) Pageable paginacao){
         return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
 
 
     }
 
-//    @PutMapping //vai realizar o Update do CRUD
-//    @Transactional
-//    public DadosListagemCompletaMedico atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
-//        /***
-//         * O getReferenceById() vai retornar os dados(do tipo Medico) apenas do ID solicitado***/
-//        Medico medico = repository.getReferenceById(dados.id());
-//        medico.atualizarInformacoes(dados);
-//        return dadosMedicoById(dados.id());
-//
-//
-//    }
-
-    @DeleteMapping("/{id}") //as chaves {} indica que é um parâmetro dinâmico, ou seja, não é um valor específico
-    //@PathVariable indica que o id irá receber um parâmetro da URL
+    @PutMapping //vai realizar o Update do CRUD
     @Transactional
-    /***Este método deletar um registro de forma lógica***/
+    public DadosListagemCompletaMedico atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
+        /***
+         * O getReferenceById() vai retornar os dados(do tipo Medico) apenas do ID solicitado***/
+        Medico medico = repository.getReferenceById(dados.id());
+        medico.atualizarInformacoes(dados);
+        return dadosMedicoById(dados.id());
+
+
+    }
+
+    @DeleteMapping("/id={id}") //as chaves {} indica que é um parâmetro dinâmico, ou seja, não é um valor específico
+    @Transactional
+    /***Este método vai deletar um registro de forma lógica, colocando ativo = 0 ou false
+     * @PathVariable indica que o id irá receber um parâmetro da URL
+     * ex: http://localhost:8080/medicos/id=2 ***/
     public void excluir(@PathVariable Long id) {
         Medico medico = repository.getReferenceById(id);
         medico.excluir();

@@ -15,15 +15,14 @@ import med.voll.api.pessoa.Pessoa;
 @Getter
 @NoArgsConstructor //construtor que NÃO recebe todos os campos
 @AllArgsConstructor //construtor que recebe todos os campos
-@EqualsAndHashCode(of = "id")
 @ToString
-public class Medico {
+public class Medico extends Pessoa {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded //indica que os campos da <classe Pessoa> vao estar na tabela <medicos>
-    private Pessoa medico;
+//    @Embedded //indica que os campos da <classe Pessoa> vao estar na tabela <medicos>
+//    private Pessoa pessoa;
 
     private String crm;
 
@@ -40,13 +39,14 @@ public class Medico {
 
     public Medico(DadosCadastroMedico dados) {
         this.ativo = true; //no BD vai ser 1
-        this.medico = new Pessoa(dados.medico());
+//        this.pessoa = new Pessoa(dados.medico());
         this.crm = dados.crm();
         this.especialidade = new Especialidade(dados.especialidade());
     }
 
+    @Override
     public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
-        this.medico.atualizarInformacoes(dados);
+        super.atualizarInformacoes(dados);
     }
 
     public void excluir() {
