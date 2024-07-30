@@ -21,7 +21,7 @@ public record DadosListagemCompletaMedico
 ) {
 
 
-    //este construtor irá receber todos os dados do médico, contudo apenas alguns dados serão utilizados
+    //este construtor irá receber todos os dados do médico, contudo apenas alguns dados serão utilizados/retornados
     public DadosListagemCompletaMedico(Medico medico){
         this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getTelefone(), medico.getCrm(), medico.getEndereco(), medico.getAtivo(), medico.getEspecialidade());
 

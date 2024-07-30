@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +29,25 @@ public class MedicoController {
      * no corpo da requisição - que neste caso é um json***/
     @Transactional //Colocado quando o método salva, atualiza e/ou exclui dados de um banco de dados
     /***Este método irá adicionar um novo registro
-     * ver arquivo  src/main/resources/testandoApi.txt***/
-    public DadosListagemCompletaMedico cadastrar(@RequestBody @Valid DadosCadastroMedico dados){
-        Medico medico = repository.save(new Medico(dados));
-        return new DadosListagemCompletaMedico(repository.findById(medico.getId()).get());
+     * ver arquivo  src/main/resources/testandoApi.txt
+     * Aqui, deve-se retornar o código 201, contudo ele tem algumas regras, para o que se deve retornar:
+     * - O código 201
+     * - Os dados do novo registro/recurso criado que geralmente é do tipo DTO <Data Transfer Object>
+     * - Cabeçalho do protcolo HTTP, que se chama Location
+     * ***/
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriComponentsBuilder){
+        Medico medico = new Medico(dados);
+        repository.save(medico);
+
+        /*aqui é o Location
+        /{id} recebe o medico.getId()
+        //aqui vai ser a url(e.g, http://localhost:8080/medicos/id=12
+        */
+        var uri = uriComponentsBuilder.path("/medicos/id={id}").buildAndExpand(medico.getId()).toUri();
+
+
+        //new DadosListagemCompletaMedico(medico) é os dados do novo registro criado
+        return ResponseEntity.created(uri).body(new DadosListagemCompletaMedico(medico));
 
     }
 
@@ -43,17 +60,21 @@ public class MedicoController {
     /***
      * vai retornar as informações completas de um médico de acordo como id informado
      * ex: http://localhost:8080/medicos/id=3
+     * código 200
      * */
     @GetMapping(value = "/id={id}")
-    public DadosListagemCompletaMedico dadosMedicoById(@PathVariable Long id){
-        return new DadosListagemCompletaMedico(repository.findById(id).get());
+    public ResponseEntity dadosMedicoById(@PathVariable Long id){
+        var medico = repository.findById(id).get();
 
+        return ResponseEntity.ok(new DadosListagemCompletaMedico(medico));
 
     }
 
 
     /*** Vai retornar os registros(ativos) dos medicos que tiverem o nome solicitado na url
      * ex: http://localhost:8080/medicos/nome=Gabriela?sort=especialidade.nome
+     * código 200
+     *
     * */
     @GetMapping(value = "/nome={nome}")
     public Page<DadosListagemMedico> dadosMedicoByNome(@PathVariable String nome,@PageableDefault(size = 10) Pageable paginacao) {
@@ -77,21 +98,23 @@ public class MedicoController {
      * Este método retorna um Page, pois o tipo page retorna além dos dados, informações como quantidade de dados, etc...
      * Retorna apenas os registros ativos = 1 ou true
      * ***/
-    public Page<DadosListagemMedico> listar(@PageableDefault(size = 10, sort = {"nome","especialidade.nome"}) Pageable paginacao){
-        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
-
+    public ResponseEntity<Page<DadosListagemMedico>> listar(@PageableDefault(size = 10, sort = {"nome","especialidade.nome"}) Pageable paginacao){
+        var page = repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedico::new);
+        return ResponseEntity.ok(page);
 
     }
 
     @PutMapping //vai realizar o Update do CRUD
     @Transactional
-    public DadosListagemCompletaMedico atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
+    public ResponseEntity<DadosListagemCompletaMedico> atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados){
         /***
          * O getReferenceById() vai retornar os dados(do tipo Medico) apenas do ID solicitado
-         * ver arquivo src/main/resources/testandoApi.txt***/
+         * ver arquivo src/main/resources/testandoApi.txt
+         * codigo 200
+         * ***/
         Medico medico = repository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
-        return dadosMedicoById(dados.id());
+        return ResponseEntity.ok(new DadosListagemCompletaMedico(medico));
 
 
     }
@@ -101,9 +124,15 @@ public class MedicoController {
     /***Este método vai deletar um registro de forma lógica, colocando ativo = 0 ou false
      * @PathVariable indica que o id irá receber um parâmetro da URL
      * ex: http://localhost:8080/medicos/id=2 ***/
-    public String excluir(@PathVariable Long id) {
+    public ResponseEntity excluir(@PathVariable Long id) {
         Medico medico = repository.getReferenceById(id);
         medico.excluir();
-        return "O usuário " + medico.getNome() + " foi excluído com SUCESSO";
+        /***
+         * Aqui, está retornando um ResponseEntity.noContent().build()(codigo 204). Que é o retorno mais comum ao excluir algo
+         * pois, no front-end por exemplo, pegamos a response e com base nela, colocamos  a reposta
+         * Mas da para retornar uma String, indicando qual o usário foi excluido.
+         * */
+//        return "O usuário " + medico.getNome() + " foi excluído com SUCESSO";
+        return ResponseEntity.noContent().build();
     }
 }

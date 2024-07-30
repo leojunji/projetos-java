@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import med.voll.api.medico.DadosAtualizacaoMedico;
 import med.voll.api.medico.DadosCadastroMedico;
+import med.voll.api.paciente.DadosCadastroPaciente;
 
 
 @MappedSuperclass //Entidades filhas irão receber os atributos desta classe
@@ -27,6 +28,16 @@ public class Pessoa {
     private Endereco endereco;
 
     public Pessoa(DadosCadastroMedico dados) {
+        this.nome = dados.nome();
+
+        this.email = dados.email();
+
+        this.telefone = dados.telefone();
+
+        this.endereco = new Endereco(dados.endereco());
+    }
+
+    public Pessoa(DadosCadastroPaciente dados) {
         this.nome = dados.nome();
 
         this.email = dados.email();

@@ -1,0 +1,8 @@
+-- constraint for table pacientes
+
+-- restrictions: cpf should have 11 digits and only numbers
+
+
+ALTER TABLE pacientes
+ADD CONSTRAINT chk_cpf_length
+CHECK (LENGTH(cpf) = 11 AND cpf NOT LIKE '%[^0-9]%');

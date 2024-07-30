@@ -29,7 +29,7 @@ http://localhost:8080/medicos
 
 ###############################################################################################################
 
-2 -- ver usuario cadastro
+2 -- ver usuario cadastrado via id
 
 
 http://localhost:8080/medicos/id=11
