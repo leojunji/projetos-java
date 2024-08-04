@@ -1,4 +1,4 @@
-package med.voll.api.medico.especialidade;
+package med.voll.api.domain.medico.especialidade;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

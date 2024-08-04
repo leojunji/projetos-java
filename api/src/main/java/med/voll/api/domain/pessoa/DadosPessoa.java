@@ -1,13 +1,12 @@
-package med.voll.api.paciente;
+package med.voll.api.domain.pessoa;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import med.voll.api.pessoa.DadosEndereco;
 
-public record DadosCadastroPaciente (
+public record DadosPessoa(
+
         @NotBlank
         String nome,
 
@@ -20,12 +19,8 @@ public record DadosCadastroPaciente (
 
         @NotNull
         @Valid //considerar as validações do DadosEndereco
-        DadosEndereco endereco,
-        @NotBlank //Not blank é apenas para campos String
-        @Pattern(regexp = "\\d{11}", message = "CPF must be exactly 11 digits") // cpf should have 11 digits
-        String cpf
-
-) {
-
-
+        DadosEndereco endereco) {
+        public DadosPessoa(Pessoa medico) {
+                this(medico.getNome(), medico.getEmail(), medico.getTelefone(), new DadosEndereco(medico.getEndereco()));
+        }
 }

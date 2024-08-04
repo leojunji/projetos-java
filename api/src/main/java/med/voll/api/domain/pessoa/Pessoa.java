@@ -1,15 +1,14 @@
-package med.voll.api.pessoa;
+package med.voll.api.domain.pessoa;
 
 
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import med.voll.api.medico.DadosAtualizacaoMedico;
-import med.voll.api.medico.DadosCadastroMedico;
-import med.voll.api.paciente.DadosCadastroPaciente;
+import med.voll.api.domain.medico.DadosAtualizacaoMedico;
+import med.voll.api.domain.medico.DadosCadastroMedico;
+import med.voll.api.domain.paciente.DadosCadastroPaciente;
 
 
 @MappedSuperclass //Entidades filhas irão receber os atributos desta classe

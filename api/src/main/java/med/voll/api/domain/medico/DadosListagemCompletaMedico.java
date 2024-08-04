@@ -1,11 +1,8 @@
-package med.voll.api.medico;
+package med.voll.api.domain.medico;
 
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import med.voll.api.medico.especialidade.Especialidade;
-import med.voll.api.pessoa.Endereco;
-import med.voll.api.pessoa.Pessoa;
+import med.voll.api.domain.medico.especialidade.Especialidade;
+import med.voll.api.domain.pessoa.Endereco;
 
 public record DadosListagemCompletaMedico
         (

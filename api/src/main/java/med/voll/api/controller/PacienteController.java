@@ -3,11 +3,11 @@ package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.medico.*;
-import med.voll.api.paciente.DadosCadastroPaciente;
-import med.voll.api.paciente.DadosListagemCompletaPaciente;
-import med.voll.api.paciente.Paciente;
-import med.voll.api.paciente.PacientesRepository;
+import med.voll.api.domain.medico.*;
+import med.voll.api.domain.paciente.DadosCadastroPaciente;
+import med.voll.api.domain.paciente.DadosListagemCompletaPaciente;
+import med.voll.api.domain.paciente.Paciente;
+import med.voll.api.domain.paciente.PacientesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +46,7 @@ public class PacienteController {
         var uri = uriComponentsBuilder.path("/pacientes/id={id}").buildAndExpand(paciente.getId()).toUri();
 
 
-        //new DadosListagemCompletaMedico(medico) é os dados do novo registro criado
+        //new DadosListagemCompletaPaciente(medico) é os dados do novo registro criado
         return ResponseEntity.created(uri).body(new DadosListagemCompletaPaciente(paciente));
 
     }
@@ -60,6 +60,23 @@ public class PacienteController {
 
     }
 
+//    @PutMapping
+//    @Transactional
+//    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoPaciente dados) {
+//        var paciente = repository.getReferenceById(dados.id());
+//        paciente.atualizarInformacoes(dados);
+//
+//        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
+//    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id) {
+        var paciente = repository.getReferenceById(id);
+        paciente.excluir();
+
+        return ResponseEntity.noContent().build();
+    }
 
 
 

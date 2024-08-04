@@ -1,9 +1,4 @@
-package med.voll.api.medico.especialidade;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import med.voll.api.medico.especialidade.Especialidade;
+package med.voll.api.domain.medico.especialidade;
 
 public record DadosEspecialidade (
 

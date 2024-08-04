@@ -1,9 +1,7 @@
-package med.voll.api.medico;
+package med.voll.api.domain.medico;
 
 import jakarta.validation.constraints.NotNull;
-import med.voll.api.medico.especialidade.DadoIdEspecialidade;
-import med.voll.api.medico.especialidade.Especialidade;
-import med.voll.api.pessoa.DadosEndereco;
+import med.voll.api.domain.pessoa.DadosEndereco;
 
 public record DadosAtualizacaoMedico(
         @NotNull

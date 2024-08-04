@@ -1,12 +1,11 @@
-package med.voll.api.paciente;
+package med.voll.api.domain.paciente;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import med.voll.api.pessoa.Endereco;
-import med.voll.api.pessoa.Pessoa;
+import med.voll.api.domain.pessoa.Pessoa;
 
 
 @Entity(name = "Paciente") // indica que vai ser uma tabela no banco de dados
@@ -29,5 +28,10 @@ public class Paciente extends Pessoa {
         this.id = id;
         this.cpf = dados.cpf();
         this.ativo = true;
+    }
+
+    public void excluir() {
+        this.ativo = false;
+
     }
 }

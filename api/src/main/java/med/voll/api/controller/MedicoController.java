@@ -3,8 +3,11 @@ package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.medico.*;
-import med.voll.api.medico.especialidade.DadosEspecialidade;
+import med.voll.api.domain.medico.DadosListagemCompletaMedico;
+import med.voll.api.domain.medico.DadosListagemMedico;
+import med.voll.api.domain.medico.Medico;
+import med.voll.api.domain.medico.MedicosRepository;
+import med.voll.api.domain.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +15,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/medicos")
@@ -64,8 +64,11 @@ public class MedicoController {
      * */
     @GetMapping(value = "/id={id}")
     public ResponseEntity dadosMedicoById(@PathVariable Long id){
-        var medico = repository.findById(id).get();
-
+        //Nesse caso, é melhor usar o getReferenceById(id), pois ele é um método da JPA
+        //caso fosse usado o findById(id) (que faz uma query para o databse), não estariamos
+        //usando o JPA, e o tratamento de erros por exemplo teria de ser diferente do que
+        //estamos fazendo agora, que é por meio da classe TratadorDeErros
+        var medico = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosListagemCompletaMedico(medico));
 
     }
@@ -77,7 +80,7 @@ public class MedicoController {
      *
     * */
     @GetMapping(value = "/nome={nome}")
-    public Page<DadosListagemMedico> dadosMedicoByNome(@PathVariable String nome,@PageableDefault(size = 10) Pageable paginacao) {
+    public Page<DadosListagemMedico> dadosMedicoByNome(@PathVariable String nome, @PageableDefault(size = 10) Pageable paginacao) {
         return repository.findByNome(nome, paginacao).map(DadosListagemMedico::new);
 
     }

@@ -1,10 +1,9 @@
-package med.voll.api.medico;
+package med.voll.api.domain.medico;
 
 import jakarta.persistence.*;
 import lombok.*;
-import med.voll.api.medico.especialidade.Especialidade;
-import med.voll.api.pessoa.DadosPessoa;
-import med.voll.api.pessoa.Pessoa;
+import med.voll.api.domain.medico.especialidade.Especialidade;
+import med.voll.api.domain.pessoa.Pessoa;
 
 
 /***
