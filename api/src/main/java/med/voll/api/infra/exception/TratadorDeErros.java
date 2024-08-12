@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
+
+
+/*
+* Esta classe irá tratar erros da API
+* */
+
 //para o spring carregar uma classe Java, deve sempre ter uma anotação indicando, nesse caso
 //a  anotação é @RestControllerAdvice
 @RestControllerAdvice //indica que esta classe serve para tratar erros

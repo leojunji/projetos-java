@@ -80,6 +80,13 @@
 			<scope>test</scope>
 		</dependency>
 
+<!--		biblioteca que serve para realizar a gerção dos JSON Web tokens-->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>4.2.1</version>
+		</dependency>
+
 
 	</dependencies>
 

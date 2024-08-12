@@ -81,7 +81,7 @@ public class MedicoController {
     * */
     @GetMapping(value = "/nome={nome}")
     public Page<DadosListagemMedico> dadosMedicoByNome(@PathVariable String nome, @PageableDefault(size = 10) Pageable paginacao) {
-        return repository.findByNome(nome, paginacao).map(DadosListagemMedico::new);
+        return repository.findByNome(nome, paginacao).map(medico -> new DadosListagemMedico(medico));
 
     }
 
