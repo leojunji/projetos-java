@@ -3,6 +3,11 @@ package med.voll.api.infra.security;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import med.voll.api.domain.usuario.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -17,7 +22,14 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
 
+    @Autowired
+    private UsuarioRepository repository;
+
+    @Autowired //o Spring vai inicializar este objeto automaticamento(AutoWired)
+    private TokenService tokenService; //should be my TokenService class, not the spring's class
+
     /**
+     * Este método, vai pegar o token do cabeçalho, validar o token(getSubject()=valida e retornar o subject(user))
      * @param request pega coisas da requisição
      * @param response enviar coisas na resposta da requisição
      * @param filterChain representa a cadeia de filtros, pois existem vários filtros, e um leva/chama ao/o outro
@@ -27,10 +39,36 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-
         var tokenJWT = recuperarToken(request);
 
-        System.out.println(tokenJWT);
+
+        //caso venha o token, vai verificar o token. Se não vier o token(null), não irá acontecer nada,
+        // e o programa irá continuar
+        //mas vai passar pela validação do securityFilterChain do class SecurityConfigurations(i.e., que é uma validação
+//        do spring). Ai nessa validação do securityFilterChain , caso a requisição tenha o cabeçalho do tipo null,
+//        mas seja /login to tipo POST, então o
+//        spring vai liberar, caso não seja, então o spring vai bloquear
+        if(tokenJWT != null) {
+            //        validar o token
+            var subject = this.tokenService.getSubject(tokenJWT);
+            //se o token for válido, estou agora, avisando para o spring que a pessoa está autenticada
+            //Isso é necessário, pois como a aplicação é STATELESS, o usuário deve sempre realizar um login
+            //assim, devo avisar o spring que o usuário já fez login, e que o token é valido
+
+            //retorna o usuário(todos os dados dele)
+            var usuario = this.repository.findByEmail(subject);
+
+//            criando um usuário(do tipo UsernamePasswordAuthenticationToken)
+            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+
+            //aqui estou avisando para o spring autenticar o usuário NESTA REQUISIÇÃO.Estou "forçando" um login
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println("USUARIO LOGADO");
+        }
+
+
+
+
         filterChain.doFilter(request, response); //aqui estamos chamando o próximo filtro da cadeia de filtros
     }
 
@@ -53,17 +91,33 @@ public class SecurityFilter extends OncePerRequestFilter {
         var autorizationHeader = request.getHeader("Authorization");
 
 
-        /*Se o token não for colocado no cabeçalho da requisição, vai dar erro
-        * */
-        if(autorizationHeader == null) {
-            throw new RuntimeException("Token JWT não enviado no cabeçalho da requisição");
+        /**
+         * OBS: ESSE IF, NÃO SERVE MAIS AGORA, DEVIDO AO CÓDIGO ADICIONADO NO securityFilterChain() NA CLASSE
+         * SecurityConfigurations. Pois no método lá, está dizendo que exige que todas as requsições tenham
+         * o token, execeto a requisição /login do tipo POST. Contudo, ali está correto, mas aqui está bloqueando
+         * qualquer resuisição(inclusive a /login do tipo POST). Contudo ele não deve ser usado, e deve ser
+         * alterado para o CÓDIGO ABAIXO
+         *
+         Se o token não for colocado no cabeçalho da requisição, vai dar erro
+                if(autorizationHeader == null) {
+                    throw new RuntimeException("Token JWT não enviado no cabeçalho da requisição");
+                }
+         * */
+
+//        CÓDIGO ABAIXO
+
+//        Aqui, caso caso o header estiver vindo(diferente de null), vai retornar o cabeçalho, caso não irá retornar
+//        null apenas. Ai a partir de agora, o spring irá verificar se a requisição pode ser realizada ou não, ou seja,
+//        caso retorne null e a requisição seja /login do tipo POST, então o spring irá liberar. Caso, seja null e
+//        e não seja /login do tipo POST, então o spring irá bloquear
+        if(autorizationHeader != null) {
+            /*Ao preencher o cabeçalho no insomnia, você coloca no campo token o token, e no campo prefix deixamos em branco
+             * Ao ficar em branco o campo prefix, o default é a palavra Bearer. No caso, estamos usando o replace, para tirar
+             * esta palavra
+             * */
+            return autorizationHeader.replace("Bearer ", "").trim();
         }
 
-
-        /*Ao preencher o cabeçalho no insomnia, você coloca no campo token o token, e no campo prefix deixamos em branco
-        * Ao ficar em branco o campo prefix, o default é a palavra Bearer. No caso, estamos usando o replace, para tirar
-        * esta palavra
-        * */
-        return autorizationHeader.replace("Bearer ", "");
+        return null;
     }
 }

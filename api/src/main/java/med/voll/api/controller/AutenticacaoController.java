@@ -38,6 +38,7 @@ public class AutenticacaoController {
      */
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
+        try {
         //UsernamePasswordAuthenticationToken  = é um DTO do spring security
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var authentication = manager.authenticate(authenticationToken);
@@ -45,6 +46,10 @@ public class AutenticacaoController {
         Usuario usuario = (Usuario) authentication.getPrincipal();
         var tokenJWT = tokenService.gerarToken(usuario);
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
     }
 
 }

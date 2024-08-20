@@ -1,8 +1,10 @@
 package med.voll.api.infra.security;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 /*
@@ -22,6 +25,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfigurations {
 
 
+    @Autowired
+    private SecurityFilter securityFilter;
 
 
     //@Bean -> vai expor o retorno deste método (i.e., dessa forma o spring vai chamar esse método e por consequencia
@@ -53,10 +58,24 @@ public class SecurityConfigurations {
          *  aparece uma tela de login. Assim sendo, agora é  possível fazer requisições de forma "livre".
          * Pois será feito pelo desenvolvedor o processo de autenticação
          * */
-        return http
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .build();
+        return
+                http
+                        .csrf(csrf -> csrf.disable())
+                        .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .authorizeHttpRequests(req -> {
+                            //todas as requisições precisam ter o token no cabeçalho, exceto a requisição de login
+                            //aqui está a dizer: se vier uma requisição /login do tipo POST, libere ela
+                            //=======
+                            //ISSO ACONTECE, POIS VOCÊ RECEBE O TOKEN NA HORA DO LOGIN, ENTÃO NÃO FAZ SENTIDO SOLICITAR
+                            //O TOKEN NA HORA DE FAZER O LOGIN
+                            req.requestMatchers("/login").permitAll();
+                            //aqui, qualquer outra requisição deve estar autenticada
+                            req.anyRequest().authenticated();
+                        })
+                        //aqui estou fazendo o securityFilter ser chamado antes do filtro padrão do Spring
+                        // que se chama UsernamePasswordAuthenticationFilter
+                        .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)
+                        .build();
     }
 
     @Bean

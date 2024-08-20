@@ -60,7 +60,7 @@ public class Usuario extends Pessoa implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getEmail();
+        return getNome();
     }
 
     @Override
