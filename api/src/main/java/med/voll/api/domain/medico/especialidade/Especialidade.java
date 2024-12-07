@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity(name = "Especialidade") // indica que vai ser uma tabela no banco de dados
 @Table(name = "especialidades") //nome da tabela no banco de dados que está classe vai relacionar/mapear
 @Getter

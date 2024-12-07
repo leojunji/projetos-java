@@ -37,7 +37,7 @@ OBS: É necessário realizar o login ou cadastrar-se para ter acesso as funciona
 Exemplo de interação com a API, por meio do Insomnia:
 
 <strong>Realizando o cadastro de um médico</strong>
-![alt text](image-1.png)
+![alt text](image-2.png)
 _<p align="center">Está sendo utilizado um token de usuário para realizar o cadastro</p>_
 
 ## picpaysimplificado - API <a name="modulo2"></a>

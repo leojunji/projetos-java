@@ -35,7 +35,7 @@ public class MedicoController {
      * - Os dados do novo registro/recurso criado que geralmente é do tipo DTO <Data Transfer Object>
      * - Cabeçalho do protcolo HTTP, que se chama Location
      * ***/
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<DadosListagemCompletaMedico> cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriComponentsBuilder){
         Medico medico = new Medico(dados);
         repository.save(medico);
 
@@ -44,7 +44,6 @@ public class MedicoController {
         //aqui vai ser a url(e.g, http://localhost:8080/medicos/id=12
         */
         var uri = uriComponentsBuilder.path("/medicos/id={id}").buildAndExpand(medico.getId()).toUri();
-
 
         //new DadosListagemCompletaMedico(medico) é os dados do novo registro criado
         return ResponseEntity.created(uri).body(new DadosListagemCompletaMedico(medico));
