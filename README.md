@@ -27,7 +27,7 @@ A proposta do projeto foi realizar o back-end de uma aplicação médica.
 
 <p>
 
-OBS: É necessário realizar o login ou cadastrar-se para ter acesso as funcionalidades.
+OBS: É necessário realizar o login para ter acesso as funcionalidades.
 
 - Realizar o cadastro do médico
 - Realizar a listagem de médicos
