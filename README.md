@@ -1,8 +1,8 @@
 <h1 align="center"> projetos Java <img loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="40" height="40"/></h1>
 
-1. [api](#modulo1)
-2. [picpaysimplificado](#modulo2)
-3. [userdept](#modulo3)
+1. [Vollmed - API](#modulo1)
+2. [picpaysimplificado - API](#modulo2)
+3. [userdept - API](#modulo3)
 
 ## Introdução <a name="introduction"></a>
 
@@ -12,7 +12,7 @@ Contato:
 
 <a href = "mailto:leojunji@outlook.com"><img loading="lazy" src="https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white" target="_blank"></a>
 
-## API <a name="modulo1"></a>
+## Vollmed - API <a name="modulo1"></a>
 
 ![Badge em Desenvolvimento](https://img.shields.io/badge/status-finalizado-green)
 
@@ -40,13 +40,13 @@ Exemplo de interação com a API, por meio do Insomnia:
 ![alt text](image.png)
 _<p align="center">Está sendo utilizado um token de usuário para realizar o cadastro</p>_
 
-## picpaysimplificado <a name="modulo2"></a>
+## picpaysimplificado - API <a name="modulo2"></a>
 
 ![Badge em Desenvolvimento](https://img.shields.io/badge/status-em%20desenvolvimento-blue)
 
 <p>Observação: Projeto apenas para fins de estudo<p>
 
-## userdept <a name="modulo3"></a>
+## userdept - API <a name="modulo3"></a>
 
 ![Badge em Desenvolvimento](https://img.shields.io/badge/status-finalizado-green)
 
