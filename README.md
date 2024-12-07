@@ -46,8 +46,6 @@ _<p align="center">Está sendo utilizado um token de usuário para realizar o ca
 
 <p>Observação: Projeto apenas para fins de estudo<p>
 
-<p>Projeto para vaga de programador no PICPAY<p>
-
 ## userdept <a name="modulo3"></a>
 
 ![Badge em Desenvolvimento](https://img.shields.io/badge/status-finalizado-green)
