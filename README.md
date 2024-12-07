@@ -21,7 +21,7 @@ Projeto "Spring Boot 3: desenvolva uma API Rest em Java" do curso da Alura.
 <p>
 <p>
 A proposta do projeto foi realizar o back-end de uma aplicação médica.
-<u>Esta API utiliza o Spring Security para realizar a autenticação de usuários.</u>
+<ins>Esta API utiliza o Spring Security para realizar a autenticação de usuários.</ins>
 
 <strong>Funcionalidades da api: </strong>
 
