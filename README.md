@@ -32,7 +32,7 @@ OBS: É necessário realizar o login ou cadastrar-se para ter acesso as funciona
 - Realizar o cadastro do médico
 - Realizar a listagem de médicos
   - Busca por Id e por Nome
-- Realizar a exclusão de médicos
+- Realizar a exclusão-lógica de médicos
 
 Exemplo de interação com a API, por meio do Insomnia:
 
