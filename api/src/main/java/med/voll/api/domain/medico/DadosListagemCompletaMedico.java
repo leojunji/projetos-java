@@ -13,7 +13,7 @@ public record DadosListagemCompletaMedico
         String crm,
         Endereco endereco,
         Boolean medicoAtivo,
-        Long idEspecialidade
+        Especialidade especialidade
 
 ) {
 
@@ -27,7 +27,7 @@ public record DadosListagemCompletaMedico
 
     */
     public DadosListagemCompletaMedico(Medico medico){
-        this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getTelefone(), medico.getCrm(), medico.getEndereco(), medico.getAtivo(), medico.getEspecialidade().getId());
+        this(medico.getId(), medico.getNome(), medico.getEmail(), medico.getTelefone(), medico.getCrm(), medico.getEndereco(), medico.getAtivo(), medico.getEspecialidade());
 
 
     }
