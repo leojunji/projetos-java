@@ -38,7 +38,7 @@ Exemplo de interação com a API, por meio do Insomnia:
 
 <strong>Realizando o cadastro de um médico</strong>
 ![alt text](image.png)
-_<p align="center">Está sendo utilizado o token do usuário para realizar o cadastro</p>_
+_<p align="center">Está sendo utilizado um token de usuário para realizar o cadastro</p>_
 
 ## picpaysimplificado <a name="modulo2"></a>
 
