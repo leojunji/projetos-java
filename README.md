@@ -36,9 +36,10 @@ OBS: É necessário realizar o login ou cadastrar-se para ter acesso as funciona
 
 Exemplo de interação com a API, por meio do Insomnia:
 
-<strong>Realizando o cadastro de um médico</strong>
+<strong>Realizando o cadastro de um médico:</strong>
+
 ![alt text](image-2.png)
-<strong>Realizando a busca por ID do médico cadastrado</strong>
+<strong>Realizando a busca por ID do médico cadastrado:</strong>
 
 ![alt text](image-4.png)
 ![alt text](image-3.png)
